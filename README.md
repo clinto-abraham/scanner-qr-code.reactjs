@@ -1,16 +1,98 @@
-# React + Vite
+# Folder Structure Planning
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+1. React sends request
+   └─ Authorization: Bearer JWT
 
-Currently, two official plugins are available:
+2. Gateway receives request
+   ├─ CORS check
+   ├─ JWT validation
+   ├─ RBAC (route → roles)
+   ├─ Rate limiting (Redis)
+   ├─ Spike detection
+   ├─ IP rules
+   ├─ Device fingerprint
+   ├─ Replay check
+   ├─ Threat scoring
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+3. Gateway builds context
+   ├─ requestId
+   ├─ timestamp
+   ├─ userContext
+   ├─ fingerprint
 
-## React Compiler
+4. Gateway signs request
+   ├─ HMAC(body + timestamp)
+   ├─ Adds internal secret
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+5. Custom proxy forwards request
 
-## Expanding the ESLint configuration
+6. Mongo-service receives
+   ├─ Internal secret validation
+   ├─ Gateway context decoding
+   ├─ Replay protection
+   ├─ HMAC verification
+   ├─ Business logic
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+7. Response flows back
+   ├─ Normalized response
+   └─ requestId preserved
+
+✅ Zero-trust API gateway
+✅ Envelope-based contract
+✅ Stateless auth
+✅ Replay-safe system
+✅ Gateway-owned metadata
+✅ Internal service isolation
+✅ Production-ready frontend integration
+
+src/
+├── app/
+│   └── AppProviders.jsx
+├── configs/
+│   ├── reactQuery.config.js
+│   └── env.config.js
+├── lib/
+│   └── apiClient.js
+├── services/
+│   └── participant.service.js
+├── hooks/
+│   ├── mutations/
+│   │   └── useScanParticipant.js
+│   └── queries/
+│       └── useParticipantDetails.js
+│       ├── useParticipant.js
+│       ├── useParticipantsList.js
+│       ├── useEventDetails.js
+│       ├── useFoodStatus.js
+│       └── useStayDetails.js
+├── components/
+│   ├── qr/
+│   │   └── QRScanner.jsx
+│   ├── participant/
+│   │   ├── ParticipantCard.jsx
+│   │   ├── FoodTokenBadge.jsx
+│   │   └── StayInfo.jsx
+├── pages/
+│   └── ScanPage.jsx
+├── utils/
+│   ├── useInvalidateParticipant.js
+│   └── useOptimisticFoodUpdate.js
+└── main.jsx
+
+
+
+src/hooks/
+
+│
+├── mutations/
+│   ├── useScanParticipant.js
+│   ├── useApplyFoodToken.js
+│   ├── useUndoFoodToken.js
+│   ├── useUpdateStay.js
+│   └── useCreateParticipant.js
+│
+├── utils/
+│   ├── useInvalidateParticipant.js
+│   └── useOptimisticFoodUpdate.js
+│
+└── index.js

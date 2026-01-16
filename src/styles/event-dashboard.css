@@ -1,0 +1,36 @@
+.event-dashboard {
+  padding: 24px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.wide-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 14px;
+  margin-bottom: 24px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.action-card {
+  padding: 16px;
+  border-radius: 10px;
+  background: #f7f7f7;
+  text-align: center;
+}
+
+button {
+  margin-top: 12px;
+}
+
+
+/* 
+new changes below, check any repeat
+ */
+

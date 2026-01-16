@@ -1,25 +1,33 @@
 "use strict";
+import ErrorApiState from "../components/error/ErrorApiState";
+import EventSkeleton from "../components/skeletons/EventSkeleton";
+import { useEvents } from "../hooks/queries/useEvents";
+import EventCard from "../components/events/EventCard";
 
-import { useNavigate } from "react-router-dom";
+import "../styles/event-card.css";
 
 export default function Home() {
-  const navigate = useNavigate();
+  const { data = {}, isLoading, error } = useEvents();
+
+  if (isLoading) {
+    return (
+      <div className="grid">
+        {[...Array(3)].map((_, i) => (
+          <EventSkeleton key={i} />
+        ))}
+      </div>
+    );
+  }
+
+  if (error) {
+    return <ErrorApiState error={error} />;
+  }
 
   return (
-    <div className="page">
-      <h1>QR Scanner</h1>
-
-      <button onClick={() => navigate("/scan/entry")}>
-        🚪 Entry Scan
-      </button>
-
-      <button onClick={() => navigate("/scan/food")}>
-        🍽️ Food Scan
-      </button>
-
-      <button onClick={() => navigate("/scan/stay")}>
-        🛏️ Stay Scan
-      </button>
+    <div className="grid">
+      {data?.events.map((event) => (
+        <EventCard key={event._id} event={event} />
+      ))}
     </div>
   );
 }

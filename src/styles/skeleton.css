@@ -1,0 +1,48 @@
+.skeleton {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.wave {
+  position: relative;
+  overflow: hidden;
+  background: #e0e0e0;
+}
+
+.wave::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -150px;
+  height: 100%;
+  width: 150px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,0.6),
+    transparent
+  );
+  animation: wave 1.5s infinite;
+}
+
+@keyframes wave {
+  0% { left: -150px; }
+  100% { left: 100%; }
+}
+
+.skeleton-image {
+  height: 180px;
+  border-radius: 8px;
+}
+
+.skeleton-text {
+  height: 16px;
+  margin-top: 12px;
+  border-radius: 4px;
+}
+
+.skeleton-text.small {
+  width: 60%;
+}

@@ -1,10 +1,17 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './styles/index.css'
-import App from './App.jsx'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import "./styles/main.css";
 
-createRoot(document.getElementById('root')).render(
+import AppProviders from "./app/AppProviders.jsx";
+import AppRoutes from "./app/AppRoutes.jsx";
+import ErrorBoundary from "./components/error/ErrorBoundary.jsx";
+
+createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <App />
-  </StrictMode>,
-)
+    <ErrorBoundary name="App Root Page" location="./main.jsx">
+      <AppProviders>
+        <AppRoutes />
+      </AppProviders>
+    </ErrorBoundary>
+  </StrictMode>
+);

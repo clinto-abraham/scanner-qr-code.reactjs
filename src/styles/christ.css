@@ -1,0 +1,14 @@
+.cross-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+/* Slightly larger on desktop */
+@media (min-width: 768px) {
+  .cross-container svg {
+    width: 80px;
+    height: 80px;
+  }
+}
